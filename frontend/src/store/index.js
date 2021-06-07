@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     personas: [],
     persona: {},
+    categorias: [],
     loading: false
   },
   mutations: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     SET_LOADING(state, payload) {
       state.loading = payload;
+    },
+    SET_CATEGORIAS(state, categorias) {
+      state.categorias = categorias;
     }
   },
   actions: {
@@ -50,6 +54,24 @@ export default new Vuex.Store({
     },
     eliminarPersona({commit}, {id, onComplete, onError}){
       axios.delete(`http://localhost:3000/Personal/${id}`)
+      .then(onComplete)
+      .catch(onError)
+    },
+    setCategorias({commit}){
+      commit("SET_LOADING", true);
+      axios.get('http://localhost:3000/Categorias/')
+      .then( response => {
+        commit('SET_CATEGORIAS', response.data);
+      })
+      .finally(() => commit('SET_LOADING', false))
+    },
+    crearCategoria({commit}, {params, onComplete, onError}) {
+      axios.post('http://localhost:3000/Categorias/', params)
+      .then(onComplete)
+      .catch(onError)
+    },
+    eliminarCategoria({commit}, {id, onComplete, onError}){
+      axios.delete(`http://localhost:3000/Categorias/${id}`)
       .then(onComplete)
       .catch(onError)
     }

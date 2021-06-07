@@ -48,7 +48,7 @@
 import { mapActions } from "vuex";
 import Input from "../components/Input";
 export default {
-  name: "Agregar",
+  name: "AgregarPersona",
   components: {
     Input,
   },
