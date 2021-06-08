@@ -19,19 +19,19 @@ function crear(req, res){
         console.log(req.body);
         const ticket = req.body;
 
-        if(!ticket.nombre){
+        if(!ticket.ticketNom){
             return res.status(400).send({error: true, mensaje: "El nombre es obligatorio"});
         }
 
-        if(!ticket.nombre.length <= 50){
-            return res.status(400).send({error: true, mensaje: "A exedido el numero de caracteres"});
+        if(ticket.ticketNom.length > 50){
+            return res.status(400).send({error: true, mensaje: "A excedido el numero de caracteres"});
         }
 
-        if(!ticket.prioridad){
+        if(!ticket.ticketPrioridad){
             return res.status(400).send({error: true, mensaje: "Debes seleccionar una prioridad"});
         }
 
-        if(!ticket.estatus){
+        if(!ticket.ticketEsta){
             return res.status(400).send({error: true, mensaje: "El estatus es obligatorio"});
         }
 
@@ -51,7 +51,7 @@ function crear(req, res){
 function obtenerTicket(req, res) {
     if(connection){
         const { id } = req.params; 
-        let sql = `SELECT * FROM Tickets WHERE id = ${connection.escape(id)}`;
+        let sql = `SELECT * FROM Tickets WHERE ticketID = ${connection.escape(id)}`;
         connection.query(sql, (err, ticket) => {
             if(err){
                 console.log(err);
@@ -72,7 +72,7 @@ function editar(req, res) {
         const { id } = req.params;
         const ticket = req.body;
 
-        let sql = "UPDATE Tickets set ? WHERE id = ?";
+        let sql = "UPDATE Tickets set ? WHERE ticketID = ?";
 
         connection.query(sql, [ticket, id], (err, data) => {
             if(err) {
@@ -94,7 +94,7 @@ function editar(req, res) {
 function eliminar(req, res) {
     if(connection) {
         const { id } = req.params;
-        let sql = "DELETE FROM Tickets WHERE id = ?";
+        let sql = "DELETE FROM Tickets WHERE ticketID = ?";
         connection.query(sql, [id], (err, data) => {
             if(err) {
                 res.json(err);

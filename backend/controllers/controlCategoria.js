@@ -20,7 +20,7 @@ function crear(req, res){
         console.log(req.body);
         const categoria = req.body;
 
-        if(!categoria.nombre){
+        if(!categoria.cateNombre){
             return res.status(400).send({error: true, mensaje: "El nombre es obligatorio"});
         }
 
@@ -40,7 +40,7 @@ function crear(req, res){
 function eliminar(req, res) {
     if(connection) {
         const { id } = req.params;
-        let sql = "DELETE FROM Categorias WHERE id = ?";
+        let sql = "DELETE FROM Categorias WHERE cateID = ?";
         connection.query(sql, [id], (err, data) => {
             if(err) {
                 res.json(err);
